@@ -1,10 +1,9 @@
-import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 
 public class Main extends JFrame {
     private JPanel panelMain;
-    private JButton buttonCalculate;
     private JTextField widthInput;
     private JTextField fovOutput;
     private JSlider focalSlider;
@@ -17,11 +16,6 @@ public class Main extends JFrame {
     private JTextField heightInput;
 
     public Main() {
-        try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         setContentPane(panelMain);
         setTitle("Focal to FOV");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -30,47 +24,57 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        focalInput.addChangeListener(changeEvent -> focalSlider.setValue((int)focalInput.getValue()));
-        focalSlider.addChangeListener(changeEvent -> focalInput.setValue(focalSlider.getValue()));
-
-        buttonCalculate.addActionListener(actionEvent -> {
-            float result;
-            final int sensorX = 36;
-            final int sensorY = 24;
-            final float sensor = (float) sensorX / sensorY;
-            final int focal = (int) focalInput.getValue();
-            final float width;
-            final float height;
-
-            try {
-                width = Float.parseFloat(widthInput.getText());
-                height = Float.parseFloat(heightInput.getText());
-            } catch (NumberFormatException e) {
-                errorLabel.setText("Invalid width/height input.");
-                return;
-            }
-
-            if (focal == 0) {
-                errorLabel.setText("Specify a focal value other than 0.");
-                return;
-            }
-            if (width == 0 || height == 0) {
-                errorLabel.setText("Specify a display width/height value other than 0.");
-                return;
-            }
-
-            if (width/height >= sensor) {
-                result = (float) ((float) (180/Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
-            } else {
-                result = (float) ((float) (180/Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
-            }
-
-            fovOutput.setText("" + result);
-            errorLabel.setText("");
+        focalInput.addChangeListener(changeEvent -> {
+            focalSlider.setValue((int)focalInput.getValue());
+            calculate();
         });
+        focalSlider.addChangeListener(changeEvent -> {
+            focalInput.setValue(focalSlider.getValue());
+            calculate();
+        });
+        widthInput.addPropertyChangeListener(propertyChangeEvent -> calculate());
+        heightInput.addPropertyChangeListener(propertyChangeEvent -> calculate());
+    }
+
+    void calculate() {
+        float result;
+        final int sensorX = 36;
+        final int sensorY = 24;
+        final float sensor = (float) sensorX / sensorY;
+        final int focal = (int) focalInput.getValue();
+        final float width;
+        final float height;
+
+        try {
+            width = Float.parseFloat(widthInput.getText());
+            height = Float.parseFloat(heightInput.getText());
+        } catch (Exception e) {
+            errorLabel.setText("Invalid width/height input.");
+            return;
+        }
+
+        if (focal == 0) {
+            fovOutput.setText("Undefined");
+            errorLabel.setText("Specify a focal value other than 0.");
+            return;
+        }
+        if (width == 0 || height == 0) {
+            errorLabel.setText("Specify width/height value other than 0.");
+            return;
+        }
+
+        if (width/height >= sensor) {
+            result = (float) ((float) (180/Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
+        } else {
+            result = (float) ((float) (180/Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
+        }
+
+        fovOutput.setText("" + result);
+        errorLabel.setText(" ");
     }
 
     public static void main(String[] args) {
+        FlatLightLaf.setup();
         new Main();
     }
 }
