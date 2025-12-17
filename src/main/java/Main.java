@@ -1,4 +1,4 @@
-package jiroy1234;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 
@@ -18,8 +18,8 @@ public class Main extends JFrame {
 
     public Main() {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         setContentPane(panelMain);
