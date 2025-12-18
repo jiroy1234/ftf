@@ -15,8 +15,6 @@ public class Main extends JFrame {
     private JLabel errorLabel;
     private JTextField heightInput;
 
-    int test = 1;
-
     public Main() {
         setContentPane(panelMain);
         setTitle("Focal to FOV");
