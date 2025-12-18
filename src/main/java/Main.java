@@ -1,3 +1,5 @@
+// i suck at commit message or what that called
+
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
