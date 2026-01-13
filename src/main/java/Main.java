@@ -20,7 +20,7 @@ public class Main extends JFrame {
         setTitle("Focal to FOV");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(360,240);
+        setSize(320,240);
         setLocationRelativeTo(null);
         setVisible(true);
 
