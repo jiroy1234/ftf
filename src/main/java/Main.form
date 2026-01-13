@@ -11,7 +11,7 @@
       <component id="387c1" class="javax.swing.JSlider" binding="focalSlider">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="69" height="24"/>
+            <preferred-size width="67" height="24"/>
           </grid>
         </constraints>
         <properties>
