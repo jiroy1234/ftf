@@ -50,14 +50,13 @@ public class Main extends JFrame {
             errorLabel.setText("Invalid width/height input.");
             return;
         }
-
+        if (width == 0 || height == 0) {
+            errorLabel.setText("Specify width/height value other than 0.");
+            return;
+        }
         if (focal == 0) {
             fovOutput.setText("Undefined");
             errorLabel.setText("Specify a focal value other than 0.");
-            return;
-        }
-        if (width == 0 || height == 0) {
-            errorLabel.setText("Specify width/height value other than 0.");
             return;
         }
 
