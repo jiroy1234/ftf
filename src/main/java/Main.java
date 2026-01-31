@@ -38,7 +38,6 @@ public class Main extends JFrame {
         float result;
         final int sensorX = 36;
         final int sensorY = 24;
-        final float sensor = (float) sensorX / sensorY;
         final int focal = (int) focalInput.getValue();
         final float width;
         final float height;
@@ -55,15 +54,15 @@ public class Main extends JFrame {
             return;
         }
         if (focal == 0) {
-            fovOutput.setText("Undefined");
+            fovOutput.setText("");
             errorLabel.setText("Specify a focal value other than 0.");
             return;
         }
 
-        if (width/height >= sensor) {
-            result = (float) ((float) (180/Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
+        if (width / height >= (float) sensorX / sensorY) {
+            result = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
         } else {
-            result = (float) ((float) (180/Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
+            result = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
         }
 
         fovOutput.setText("" + result);
