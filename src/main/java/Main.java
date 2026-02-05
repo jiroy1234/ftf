@@ -4,58 +4,52 @@ import javax.swing.*;
 
 public class Main extends JFrame {
     private JPanel panelMain;
-    private JTextField widthInput;
-    private JTextField fovOutput;
-    private JSlider focalSlider;
-    private JLabel heightLabel;
-    private JLabel focalLabel;
-    private JLabel widthLabel;
-    private JLabel fovLabel;
-    private JSpinner focalInput;
-    private JLabel errorLabel;
-    private JTextField heightInput;
+    private JTextField inputWidth;
+    private JTextField outputFOV;
+    private JLabel labelHeight;
+    private JLabel labelFocal;
+    private JLabel labelWidth;
+    private JLabel labelFOV;
+    private JSpinner inputFocal;
+    private JLabel labelError;
+    private JTextField inputHeight;
+    private JButton buttonCalculate;
 
     public Main() {
         setContentPane(panelMain);
         setTitle("Focal to FOV");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(320,240);
+        setSize(300,200);
         setLocationRelativeTo(null);
         setVisible(true);
 
-        focalInput.addChangeListener(changeEvent -> {
-            focalSlider.setValue((int)focalInput.getValue());
-            calculate();
-        });
-        focalSlider.addChangeListener(changeEvent -> {
-            focalInput.setValue(focalSlider.getValue());
-            calculate();
-        });
+
+        buttonCalculate.addActionListener(actionEvent -> calculate());
     }
 
     void calculate() {
         float result;
         final int sensorX = 36;
         final int sensorY = 24;
-        final int focal = (int) focalInput.getValue();
+        final int focal = (int) inputFocal.getValue();
         final float width;
         final float height;
 
         try {
-            width = Float.parseFloat(widthInput.getText());
-            height = Float.parseFloat(heightInput.getText());
+            width = Float.parseFloat(inputWidth.getText());
+            height = Float.parseFloat(inputHeight.getText());
         } catch (Exception e) {
-            errorLabel.setText("Invalid width/height input.");
+            labelError.setText("Invalid width/height input.");
             return;
         }
         if (width == 0 || height == 0) {
-            errorLabel.setText("Specify width/height value other than 0.");
+            labelError.setText("Width/height cannot be 0.");
             return;
         }
         if (focal == 0) {
-            fovOutput.setText("");
-            errorLabel.setText("Specify a focal value other than 0.");
+            outputFOV.setText("");
+            labelError.setText("Focal length cannot be 0.");
             return;
         }
 
@@ -65,8 +59,8 @@ public class Main extends JFrame {
             result = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
         }
 
-        fovOutput.setText("" + result);
-        errorLabel.setText(" ");
+        outputFOV.setText("" + result);
+        labelError.setText(" ");
     }
 
     public static void main(String[] args) {
