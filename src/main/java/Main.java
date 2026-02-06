@@ -29,7 +29,7 @@ public class Main extends JFrame {
     }
 
     void calculate() {
-        float result;
+        float fov;
         final int sensorX = 36;
         final int sensorY = 24;
         final int focal = (int) inputFocal.getValue();
@@ -54,12 +54,12 @@ public class Main extends JFrame {
         }
 
         if (width / height >= (float) sensorX / sensorY) {
-            result = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
+            fov = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
         } else {
-            result = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
+            fov = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
         }
 
-        outputFOV.setText("" + result);
+        outputFOV.setText("" + fov);
         labelError.setText(" ");
     }
 
