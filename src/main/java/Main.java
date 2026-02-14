@@ -24,7 +24,6 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-
         buttonCalculate.addActionListener(actionEvent -> calculate());
     }
 
@@ -48,8 +47,11 @@ public class Main extends JFrame {
             return;
         }
         if (focal == 0) {
-            outputFOV.setText("");
             labelError.setText("Focal length cannot be 0.");
+            return;
+        }
+        if (focal < 0 || width < 0 || height < 0) {
+            labelError.setText("Values cannot be negative.");
             return;
         }
 
