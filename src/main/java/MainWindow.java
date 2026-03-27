@@ -26,40 +26,17 @@ public class MainWindow extends JFrame {
     }
 
     void calculate() {
-        float fov;
-        final int sensorX = 36;
-        final int sensorY = 24;
-        final int focal = (int) inputFocal.getValue();
-        final float width;
-        final float height;
-
         try {
-            width = Float.parseFloat(inputWidth.getText());
-            height = Float.parseFloat(inputHeight.getText());
-        } catch (Exception e) {
-            labelError.setText("Invalid width/height input.");
-            return;
+            float width = Float.parseFloat(inputWidth.getText());
+            float height = Float.parseFloat(inputHeight.getText());
+            int focal = (int) inputFocal.getValue();
+            float fov = Calculate.toFOV(width,height,focal);
+            outputFOV.setText("" + fov);
+            labelError.setText(" ");
+        } catch (NumberFormatException e) {
+            labelError.setText("Invalid width/height input");
+        } catch (IllegalArgumentException e) {
+            labelError.setText(e.getMessage());
         }
-        if (width == 0 || height == 0) {
-            labelError.setText("Width/height cannot be 0.");
-            return;
-        }
-        if (focal == 0) {
-            labelError.setText("Focal length cannot be 0.");
-            return;
-        }
-        if (focal < 0 || width < 0 || height < 0) {
-            labelError.setText("Values cannot be negative.");
-            return;
-        }
-
-        if (width / height >= (float) sensorX / sensorY) {
-            fov = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) (sensorX / width * height) / (2 * focal)));
-        } else {
-            fov = (float) ((float) (180 / Math.PI) * 2 * Math.atan((double) sensorY / (2 * focal)));
-        }
-
-        outputFOV.setText("" + fov);
-        labelError.setText(" ");
     }
 }
