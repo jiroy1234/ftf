@@ -21,11 +21,11 @@ public class MainWindow extends JFrame {
         setSize(300,200);
         setLocationRelativeTo(null);
         setVisible(true);
-
         buttonCalculate.addActionListener(actionEvent -> calculate());
     }
 
-    void calculate() {
+    void calculate()
+    {
         try {
             float width = Float.parseFloat(inputWidth.getText());
             float height = Float.parseFloat(inputHeight.getText());
